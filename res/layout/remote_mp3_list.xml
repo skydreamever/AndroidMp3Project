@@ -13,11 +13,5 @@
 	        android:layout_height="wrap_content"
 	        android:drawSelectorOnTop="false"
 	        android:scrollbars="vertical" />
-	    
-	    
-	    
-	    
-	    
-	    
-	</LinearLayout>
+</LinearLayout>
 
