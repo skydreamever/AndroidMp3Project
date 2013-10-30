@@ -5,6 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sun.model.Mp3Info;
 
 import android.os.Environment;
 
@@ -66,6 +70,22 @@ public class FileUtils {
 			}
 		}
 		return file;
+	}
+	
+	
+	public List<Mp3Info> getMp3Files(String path){
+		List<Mp3Info> mp3Infos = new ArrayList<Mp3Info>();
+		File file = new File(SDCardRoot+File.separator+path);
+		File[] files = file.listFiles();
+		for(int i=0;i<files.length;i++){
+			if(files[i].getName().endsWith("mp3")){
+				Mp3Info mp3Info = new Mp3Info();
+				mp3Info.setMp3Name(files[i].getName());
+				mp3Info.setMp3Size(files[i].length()+"");
+				mp3Infos.add(mp3Info);
+			}
+		}
+		return mp3Infos;
 	}
 
 }
