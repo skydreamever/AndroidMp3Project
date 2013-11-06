@@ -2,6 +2,7 @@ package com.sun.service;
 
 import com.sun.download.HttpDownloader;
 import com.sun.model.Mp3Info;
+import com.sun.mp3player.AppConstant.PlayMSG.URI;
 
 import android.app.Service;
 import android.content.Intent;
@@ -31,19 +32,21 @@ public class DownloadService extends Service{
 			this.mp3Info = mp3Info;
 		}
 		public void run(){
-			String mp3Url = "http://121.250.219.225/Mp3Resource/";
+			String mp3Url = URI.BASE_URL;
 			HttpDownloader httpDownloader = new HttpDownloader();
+			System.out.println(mp3Info);
 			int result = httpDownloader.downFile(mp3Url, "mp3/", mp3Info.getMp3Name());
-			String resultMessage = null;
-			if(result==-1){
-				resultMessage = "下载失败";
-			}
-			else if(result==0){
-				resultMessage="文件已存在";
-			}
-			else if(result==1){
-				resultMessage="下载成功";
-			}
+			result +=httpDownloader.downFile(mp3Url, "mp3/", mp3Info.getLrcName());
+//			String resultMessage = null;
+//			if(result==-1){
+//				resultMessage = "下载失败";
+//			}
+//			else if(result==0){
+//				resultMessage="文件已存在";
+//			}
+//			else if(result==1){
+//				resultMessage="下载成功";
+//			}
 			
 			
 			

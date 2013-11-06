@@ -8,9 +8,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.model.Mp3Info;
-
 import android.os.Environment;
+
+import com.sun.model.Mp3Info;
 
 public class FileUtils {
 	private String SDCardRoot;
@@ -77,15 +77,25 @@ public class FileUtils {
 		List<Mp3Info> mp3Infos = new ArrayList<Mp3Info>();
 		File file = new File(SDCardRoot+File.separator+path);
 		File[] files = file.listFiles();
+		//FileUtils fileUtils = new FileUtils();
+		if(files==null)
+			return null;
 		for(int i=0;i<files.length;i++){
 			if(files[i].getName().endsWith("mp3")){
 				Mp3Info mp3Info = new Mp3Info();
 				mp3Info.setMp3Name(files[i].getName());
 				mp3Info.setMp3Size(files[i].length()+"");
 				mp3Infos.add(mp3Info);
+				String temp[] = mp3Info.getMp3Name().split("\\.");
+				String endLrcName = temp[0] +".lrc";
+				if(this.isFileExist(endLrcName,"/mp3")){
+					mp3Info.setLrcName(endLrcName);
+				}
 			}
 		}
 		return mp3Infos;
 	}
+	
+
 
 }

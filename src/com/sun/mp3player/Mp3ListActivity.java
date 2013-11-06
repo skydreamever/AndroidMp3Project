@@ -13,6 +13,7 @@ import org.xml.sax.XMLReader;
 
 import com.sun.download.HttpDownloader;
 import com.sun.model.Mp3Info;
+import com.sun.mp3player.AppConstant.PlayMSG.URI;
 import com.sun.service.DownloadService;
 import com.sun.xml.Mp3ListContentHandler;
 
@@ -95,7 +96,7 @@ public class Mp3ListActivity extends ListActivity {
 
 	Runnable downloadXML = new Runnable(){
 		public void run(){
-			xml = downloadXML("http://121.250.219.225/Mp3Resource/resources.xml");
+			xml = downloadXML(URI.BASE_URL+"resources.xml");
 			//System.out.println(xml);
 			
 		}
