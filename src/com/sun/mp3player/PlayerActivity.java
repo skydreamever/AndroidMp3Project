@@ -44,7 +44,7 @@ public class PlayerActivity extends Activity{
 	private Mp3Info mp3Info = null;
 	private UpdateTimeCallback updateTimeCallback = null;
 	private Handler handler = null;
-	private Intent intent = null;
+	//private Intent intent = null;
 	
 	private boolean isPlaying = false;
 	
@@ -62,9 +62,14 @@ public class PlayerActivity extends Activity{
 		pauseButton.setOnClickListener(new PauseButtonListener());
 		stopButton.setOnClickListener(new StopButtonListener());
 		lrcTextView = (TextView)findViewById(R.id.lrcText);
-		
+		lrcTextView.setText("歌词显示在这里");
 		
 	}
+	
+//	protected void onPause(){
+//		super.onPause();
+//		un
+//	}
 	
 	private void prepareLrc(String lrcName){
 		try{
@@ -75,6 +80,7 @@ public class PlayerActivity extends Activity{
 			begin = 0;
 			currentTimeMill = 0;
 			nextTimeMill = 0;
+			handler.postDelayed(updateTimeCallback, 5);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -85,13 +91,15 @@ public class PlayerActivity extends Activity{
 	class BeginButtonListener implements OnClickListener{
 		
 		public void onClick(View v){
-			intent = new Intent();
+			Intent intent = new Intent();
 			intent.setClass(PlayerActivity.this, PlayerService.class);
 			intent.putExtra("MSG", AppConstant.PlayMSG.PLAY_MSG);
 			intent.putExtra("mp3Info", mp3Info);
-			prepareLrc(mp3Info.getLrcName());
+			
+//			System.out.println("testPre");
 			startService(intent);
-			begin = System.currentTimeMillis();
+			prepareLrc(mp3Info.getLrcName());
+			begin = System.currentTimeMillis()+1500L;
 			isPlaying = true;
 		}
 	}
@@ -99,7 +107,7 @@ public class PlayerActivity extends Activity{
 	class PauseButtonListener implements OnClickListener{
 		
 		public void onClick(View v){
-			intent = new Intent();
+			Intent intent = new Intent();
 			intent.setClass(PlayerActivity.this, PlayerService.class);
 			intent.putExtra("MSG", AppConstant.PlayMSG.PAUSE_MSG);
 			intent.putExtra("mp3Info", mp3Info);
@@ -119,7 +127,7 @@ public class PlayerActivity extends Activity{
 	class StopButtonListener implements OnClickListener{
 		
 		public void onClick(View v){
-			intent = new Intent();
+			Intent intent = new Intent();
 			intent.setClass(PlayerActivity.this, PlayerService.class);
 			intent.putExtra("MSG", AppConstant.PlayMSG.STOP_MSG);
 			intent.putExtra("mp3Info",mp3Info);
@@ -146,14 +154,17 @@ public class PlayerActivity extends Activity{
 		
 		public void run(){
 			long offset = System.currentTimeMillis()-begin;
-			System.out.println(offset);
+//			System.out.println(offset);
 			if(currentTimeMill == 0){
 				nextTimeMill = (Long)times.poll(); 
 				lrcTextView.setText((String)messages.poll());
 			}
 			
 			if(offset>=nextTimeMill){
+				System.out.println("offset--->"+offset);
+				System.out.println("nextTimeMill--->"+nextTimeMill);
 				nextTimeMill = (Long)times.poll();
+
 				lrcTextView.setText((String)messages.poll());
 			}
 			

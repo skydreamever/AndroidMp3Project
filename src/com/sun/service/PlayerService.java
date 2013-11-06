@@ -30,22 +30,29 @@ public class PlayerService extends Service{
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Mp3Info mp3Info = (Mp3Info)intent.getSerializableExtra("mp3Info");
 		int MSG = intent.getIntExtra("MSG", 0);
+		
+//		System.out.println(MSG+"eee");
 		if(mp3Info!=null){
 			if(MSG==AppConstant.PlayMSG.PLAY_MSG){
+//				System.out.println("test");
 				play(mp3Info);
 			}
+			else{
+				if(MSG==AppConstant.PlayMSG.PAUSE_MSG){
+//					System.out.println("testit");
+					pause();
+				}
+				else if(MSG==AppConstant.PlayMSG.STOP_MSG){
+					stop();
+				}
 			
-		}else{
-			if(MSG==AppConstant.PlayMSG.PAUSE_MSG){
-				pause();
-			}
-			else if(MSG==AppConstant.PlayMSG.STOP_MSG){
-				stop();
 			}
 		}
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
+	
+	
 	
 	private void play(Mp3Info mp3Info){
 		String path = getMp3Path(mp3Info);

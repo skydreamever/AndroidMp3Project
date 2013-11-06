@@ -40,7 +40,7 @@
             
         </activity>
         <service android:name="com.sun.service.DownloadService" />
-        
+        <service android:name="com.sun.service.PlayerService"></service>
     </application>
     
 

@@ -7,7 +7,7 @@ public interface AppConstant {
 		public static final int STOP_MSG = 3;
 		
 		public class URI{
-			public static final String BASE_URL = "http://121.250.219.222/Mp3Resource/";
+			public static final String BASE_URL = "http://192.168.1.107/Mp3Resource/";
 		}
 	}
 }
